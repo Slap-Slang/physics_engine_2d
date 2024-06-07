@@ -14,7 +14,7 @@ impl App {
     fn new() -> Self {
         App {
             particle: CParticle::new(50, 50),
-            gravity: CVector::new(0, 1),
+            gravity: CVector::new(0, -1),
         }
     }
 
