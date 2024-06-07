@@ -26,9 +26,19 @@ impl CParticle {
         T: TooF64 + PartialOrd + Copy,
     {
         CParticle {
-            position: CVector::new(pos_x, pos_x),
+            position: CVector::new(pos_x, pos_y),
             velocity: CVector::new(0, 0),
             acceleration: CVector::new(0, 0),
         }
+    }
+
+    pub fn add_force(&mut self, f: &CVector) {
+        self.acceleration.add(f);
+    }
+
+    pub fn apply_forces(&mut self) {
+        self.velocity.add(&self.acceleration);
+        self.acceleration.set_mag(0);
+        self.position.add(&self.velocity);
     }
 }
