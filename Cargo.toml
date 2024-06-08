@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 cvector = { git = "https://github.com/Slap-Slang/cvector.git"}
+ratatui = "0.26.3"

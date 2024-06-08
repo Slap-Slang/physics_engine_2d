@@ -10,26 +10,37 @@ pub struct CParticle {
 
 impl Debug for CParticle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        // f.debug_struct("CParticle")
-        //     .field("pos: ({},{})", &self.position.x(), &self.position.y)
-        //     .field("velocity", &self.velocity)
-        //     .field("acceleration", &self.acceleration)
-        //     .finish()
-        println!("pos: ({},{})", &self.position.x(), &self.position.y());
-        Ok(())
+        f.debug_struct("CParticle")
+            .field(
+                "position",
+                &format!("({},{})", self.position.x(), self.position.y()),
+            )
+            .finish()
     }
 }
 
 impl CParticle {
     pub fn new<T>(pos_x: T, pos_y: T) -> Self
     where
-        T: TooF64 + PartialOrd + Copy,
+        T: TooF64 + Copy,
     {
         CParticle {
             position: CVector::new(pos_x, pos_y),
             velocity: CVector::new(0, 0),
             acceleration: CVector::new(0, 0),
         }
+    }
+
+    pub fn x(&self) -> f64 {
+        self.position.x()
+    }
+
+    pub fn y(&self) -> f64 {
+        self.position.y()
+    }
+
+    pub fn pos(&self) -> (f64, f64) {
+        (self.x(), self.y())
     }
 
     pub fn add_force(&mut self, f: &CVector) {
