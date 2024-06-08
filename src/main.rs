@@ -39,7 +39,7 @@ struct App {
 impl App {
     fn new() -> Self {
         App {
-            ball: CCircle::new(50, 50, 10),
+            ball: CCircle::new(50, 50, 1),
             gravity: CVector::new(0, -1),
 
             bounds: Rect::new(10, 10, 200, 100),
@@ -50,6 +50,7 @@ impl App {
 
     fn run() -> Result<(), Error> {
         let mut app = App::new();
+        app.ball.set_vel(1, 0);
         let mut terminal = terminal_init()?;
         terminal.clear()?;
 
@@ -89,7 +90,7 @@ impl App {
             .background_color(Color::Rgb(100, 100, 100))
             .marker(self.marker)
             .paint(|ctx| {
-                ctx.draw(&self.particle.body);
+                ctx.draw(&self.ball.body);
                 ctx.print(0.0, 0.0, "Hont");
             })
             .x_bounds([10.0, 210.0])
@@ -98,17 +99,21 @@ impl App {
 
     fn update(&mut self) {
         self.tick_cout += 1;
-    }
 
-    fn terminal_init() -> io::Result<Terminal<CrosstermBackend<Stdout>>> {
-        enable_raw_mode()?;
-        stdout().execute(EnterAlternateScreen)?;
-        Terminal::new(CrosstermBackend::new(stdout()))
+        self.ball.add_force(&self.gravity);
+        self.ball.apply_forces();
+        self.ball.bounce(&self.bounds);
     }
+}
 
-    fn terminal_restore() -> Result<(), Error> {
-        stdout().execute(LeaveAlternateScreen)?;
-        disable_raw_mode()?;
-        Ok(())
-    }
+fn terminal_init() -> io::Result<Terminal<CrosstermBackend<Stdout>>> {
+    enable_raw_mode()?;
+    stdout().execute(EnterAlternateScreen)?;
+    Terminal::new(CrosstermBackend::new(stdout()))
+}
+
+fn terminal_restore() -> Result<(), Error> {
+    stdout().execute(LeaveAlternateScreen)?;
+    disable_raw_mode()?;
+    Ok(())
 }

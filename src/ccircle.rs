@@ -1,13 +1,13 @@
 use std::ops::{Deref, DerefMut};
 
 use cvector::cvector::{CVector, TooF64};
-use ratatui::{style::Color, widgets::canvas::Circle};
+use ratatui::{layout::Rect, style::Color, widgets::canvas::Circle};
 
 use crate::cparticle::CParticle;
 
 pub struct CCircle {
     particle: CParticle,
-    body: Circle,
+    pub body: Circle,
 }
 
 impl CCircle {
@@ -29,6 +29,20 @@ impl CCircle {
     pub fn apply_forces(&mut self) {
         self.particle.apply_forces();
         (self.body.x, self.body.y) = self.particle.pos();
+    }
+
+    pub fn bounce(&mut self, bounds: &Rect) {
+        if self.particle.x() + self.body.radius >= bounds.right() as f64
+            || self.particle.x() - self.body.radius <= bounds.left() as f64
+        {
+            self.velocity.mult_x(-1);
+        }
+
+        if self.particle.y() + self.body.radius >= bounds.bottom() as f64
+            || self.particle.y() - self.body.radius <= bounds.top() as f64
+        {
+            self.velocity.mult_y(-1);
+        }
     }
 }
 

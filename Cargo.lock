@@ -94,7 +94,7 @@ dependencies = [
 [[package]]
 name = "cvector"
 version = "0.1.0"
-source = "git+https://github.com/Slap-Slang/cvector.git#6270a3a48e112eea9a8c320bbbacf3fbc1e2b166"
+source = "git+https://github.com/Slap-Slang/cvector.git#92969ecb6b4ab71b2cbc500de692e6626fe43b62"
 dependencies = [
  "num-traits",
 ]
