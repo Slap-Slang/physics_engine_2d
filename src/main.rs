@@ -1,6 +1,27 @@
 use cvector::cvector::CVector;
 use physics_engine_2d::{ccircle::CCircle, cparticle::CParticle};
-use ratatui::symbols::Marker;
+
+use std::{
+    io::{self, stdout, Error, Stdout},
+    time::Instant,
+};
+
+use crossterm::{
+    event::{self, read, KeyCode, KeyEvent, KeyEventKind},
+    terminal::{
+        self, disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
+    },
+    ExecutableCommand,
+};
+// use num::{Float, Integer, ToPrimitive};
+use ratatui::{
+    backend::CrosstermBackend,
+    layout::Rect,
+    style::Color,
+    symbols::Marker,
+    widgets::{canvas::Canvas, Block, Widget},
+    Frame, Terminal,
+};
 
 fn main() -> Result<(), Error> {
     App::run()
