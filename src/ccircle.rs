@@ -21,7 +21,7 @@ impl CCircle {
                 x: x.too_f64(),
                 y: y.too_f64(),
                 radius: radius.too_f64(),
-                color: Color::Yellow,
+                color: Color::Black,
             },
         }
     }

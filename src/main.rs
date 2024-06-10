@@ -40,7 +40,7 @@ impl App {
     fn new() -> Self {
         App {
             ball: CCircle::new(50, 50, 1),
-            gravity: CVector::new(0, -1),
+            gravity: CVector::new(0.0, -0.1),
 
             bounds: Rect::new(10, 10, 200, 100),
             tick_cout: 0,
